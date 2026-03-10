@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatterbox Enterprise - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        .glass { backdrop-filter: blur(40px); background: rgba(255, 255, 255, 0.1); }
+        .instagram-gradient {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-purple-900/20 to-pink-900 min-h-screen p-6 relative overflow-hidden">
+
+    <!-- Background -->
+    <div class="absolute inset-0">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+
+        <!-- Header -->
+        <div class="glass backdrop-blur-xl rounded-3xl p-8 mb-8 border border-white/20 shadow-2xl text-center">
+            <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                <i class="fas fa-shield-alt text-3xl text-white"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent mb-4">
+                Enterprise Admin
+            </h1>
+            <p class="text-xl text-white/80 font-medium">Server Management & Data Export</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                <div class="text-3xl font-bold text-emerald-400 mb-2" id="onlineCount">0</div>
+                <div class="text-white/70 text-sm font-medium uppercase tracking-wide">Online Users</div>
+            </div>
+            <div class="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                <div class="text-3xl font-bold text-blue-400 mb-2" id="totalMessages">0</div>
+                <div class="text-white/70 text-sm font-medium uppercase tracking-wide">Total Messages</div>
+            </div>
+            <div class="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                <div class="text-3xl font-bold text-orange-400 mb-2" id="registeredUsers">0</div>
+                <div class="text-white/70 text-sm font-medium uppercase tracking-wide">Registered Users</div>
+            </div>
+            <div class="glass backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl">
+                <div class="text-3xl font-bold text-red-400 mb-2" id="bannedCount">0</div>
+                <div class="text-white/70 text-sm font-medium uppercase tracking-wide">Active Bans</div>
+            </div>
+        </div>
+
+        <!-- CSV DOWNLOAD BUTTONS ONLY -->
+        <div class="glass backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Data Export
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Users CSV -->
+                <a href="/enterprise/download/users"
+                   class="group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-6 px-8 rounded-2xl shadow-xl transform hover:-translate-y-2 flex items-center space-x-4 text-xl">
+                    <i class="fas fa-users text-2xl"></i>
+                    <div>
+                        <div>Users Export</div>
+                        <div class="text-emerald-100 text-sm opacity-90">Download all registered users (CSV)</div>
+                    </div>
+                    <i class="fas fa-download ml-auto text-2xl"></i>
+                </a>
+
+                <!-- Messages CSV -->
+                <a href="/enterprise/download/messages"
+                   class="group bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-6 px-8 rounded-2xl shadow-xl transform hover:-translate-y-2 flex items-center space-x-4 text-xl">
+                    <i class="fas fa-comments text-2xl"></i>
+                    <div>
+                        <div>Messages Export</div>
+                        <div class="text-blue-100 text-sm opacity-90">Download all chat messages (CSV)</div>
+                    </div>
+                    <i class="fas fa-download ml-auto text-2xl"></i>
+                </a>
+
+                <!-- Audit Logs CSV -->
+                <a href="/enterprise/download/audit"
+                   class="group bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-6 px-8 rounded-2xl shadow-xl transform hover:-translate-y-2 flex items-center space-x-4 text-xl">
+                    <i class="fas fa-clipboard-list text-2xl"></i>
+                    <div>
+                        <div>Audit Logs Export</div>
+                        <div class="text-purple-100 text-sm opacity-90">Download all admin actions (CSV)</div>
+                    </div>
+                    <i class="fas fa-download ml-auto text-2xl"></i>
+                </a>
+
+                <!-- Banned CSV -->
+                <a href="/enterprise/download/ban-report"
+                   class="group bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white font-bold py-6 px-8 rounded-2xl shadow-xl transform hover:-translate-y-2 flex items-center space-x-4 text-xl">
+                    <i class="fas fa-ban text-2xl"></i>
+                    <div>
+                        <div>Banned User Export</div>
+                        <div class="text-red-100 text-sm opacity-90">Download all banned users (CSV)</div>
+                    </div>
+                    <i class="fas fa-download ml-auto text-2xl"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Live Online Users -->
+        <div class="glass backdrop-blur-xl rounded-3xl p-8 mt-8 border border-white/20 shadow-2xl">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                Live Online Users
+            </h3>
+            <div id="onlineUsers" class="text-white/80 space-y-2 max-h-40 overflow-y-auto">
+                <div class="text-white/50 italic">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Banned Users -->
+        <div class="glass backdrop-blur-xl rounded-3xl p-8 mt-8 border border-white/20 shadow-2xl">
+            <h3 class="text-2xl font-bold text-white mb-6">
+                Active Banned Users
+            </h3>
+            <div id="bannedUsers" class="space-y-3 max-h-60 overflow-y-auto">
+                <div class="text-white/50 italic">Loading...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Toast Message -->
+    <div id="message" class="fixed top-6 right-6 p-4 rounded-2xl font-medium hidden z-50 max-w-sm"></div>
+
+<script>
+let refreshInterval;
+
+async function loadStats() {
+    try {
+        const response = await fetch('/enterprise/stats');
+        const data = await response.json();
+
+        document.getElementById('onlineCount').textContent = data.online_count || 0;
+        document.getElementById('totalMessages').textContent = data.total_messages || 0;
+        document.getElementById('registeredUsers').textContent = data.registered_users || 0;
+        document.getElementById('bannedCount').textContent = data.banned_users?.length || 0;
+
+        // Online users
+        const onlineDiv = document.getElementById('onlineUsers');
+        onlineDiv.innerHTML = data.online_users?.length
+            ? data.online_users.map(u => `<div>${u}</div>`).join('')
+            : '<div class="text-white/50 italic">No users online</div>';
+
+        // Banned users
+        const bannedDiv = document.getElementById('bannedUsers');
+        bannedDiv.innerHTML = data.banned_users?.length
+            ? data.banned_users.map(user => `
+                <div class="flex justify-between items-center bg-red-500/10 p-3 rounded-xl">
+                    <span class="text-white">${user}</span>
+                    <button onclick="unbanUser('${user}')" 
+                        class="bg-red-500 hover:bg-red-600 px-4 py-1 rounded-lg text-sm font-semibold">
+                        Unban
+                    </button>
+                </div>
+            `).join('')
+            : '<div class="text-white/50 italic">No active bans</div>';
+
+    } catch (error) {
+        showMessage('Failed to load stats', 'error');
+    }
+}
+
+async function unbanUser(username) {
+    if (!confirm(`Unban ${username}?`)) return;
+
+    try {
+        const response = await fetch(`/enterprise/unban/${username}`, { method: 'POST' });
+        const result = await response.json();
+
+        if (response.ok) {
+            showMessage(result.message || 'User unbanned', 'success');
+            loadStats();
+        } else {
+            showMessage(result.error || 'Failed to unban', 'error');
+        }
+    } catch {
+        showMessage('Server error', 'error');
+    }
+}
+
+function showMessage(text, type) {
+    const div = document.getElementById('message');
+    div.textContent = text;
+    div.className = `fixed top-6 right-6 p-4 rounded-2xl font-medium z-50 max-w-sm ${
+        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+    }`;
+    div.classList.remove('hidden');
+    setTimeout(() => div.classList.add('hidden'), 3000);
+}
+
+loadStats();
+refreshInterval = setInterval(loadStats, 3000);
+
+window.addEventListener('beforeunload', () => {
+    clearInterval(refreshInterval);
+});
+</script>
+
+</body>
+</html>
